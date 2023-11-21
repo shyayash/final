@@ -1,0 +1,235 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National cuisine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logotipchik.jpg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kazakh Culture Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #e8eace, #422521);
+            color: #fff;
+            text-align: center;
+          
+        }
+        #quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .option {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #e0e0e0;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .correct {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+        .incorrect {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+        #animation-box {
+            width: 50px;
+            height: 50px;
+            background-color: #472510;
+            margin: 20px auto;
+            border-radius: 5px;
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html">
+          <img src="logotipchik.jpg" class="logo" alt="Qazaq">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="cuisune.html">Cuisine</a>
+              </li>
+            
+           
+            <li class="nav-item">
+              <a class="nav-link" href="clothing.html">Clothing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="trad.html">Traditions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contacts.html">Contacts</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    <div id="quiz-container">
+        <h2>Kazakh Culture Quiz</h2>
+        <div id="quiz">
+         
+        </div>
+        <button onclick="submitQuiz()">Submit</button>
+        <div id="result"></div>
+        <div id="animation-box"></div>
+    </div>
+
+    <script>
+          const questions = [
+            {
+                question: "What is the traditional nomadic dwelling of the Kazakh people?",
+                options: ["Yurt", "Igloo", "Teepee", "Hut"],
+                correctAnswer: "Yurt"
+            },
+            {
+                question: "What is the national instrument of Kazakhstan?",
+                options: ["Dombra", "Balalaika", "Sitar", "Shamisen"],
+                correctAnswer: "Dombra"
+            },
+            {
+                question: "Fermented dairy product traditionally made from mare milk or donkey milk",
+                options: ["Qurt", "Shubat", "Qymyz", "Soda"],
+                correctAnswer: "Qymyz"
+            },
+            {
+                question: "A ritual performed forty days after the birth of a baby.",
+                options: ["Qyrqynan shygaru", "Zheti ata", "Shashu", "Besikke salu"],
+                correctAnswer: "Qyrqynan shygaru"
+            },
+            {
+                question: "An ancient seven-string plucked instrument, shaped like a harp or a recumbent harp.",
+                options: ["Qobyz", "Zhetigen", "Dombra", "Dabyl"],
+                correctAnswer: "Zhetigen"
+            },
+        ];
+        const quizContainer = document.getElementById("quiz");
+        const resultContainer = document.getElementById("result");
+        const animationBox = document.getElementById("animation-box");
+
+        function buildQuiz() {
+            questions.forEach((q, index) => {
+                const questionElement = document.createElement("div");
+                questionElement.classList.add("question");
+                questionElement.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+                
+                const optionsContainer = document.createElement("div");
+                optionsContainer.classList.add("options");
+
+                q.options.forEach((option) => {
+                    const optionElement = document.createElement("div");
+                    optionElement.classList.add("option");
+                    optionElement.textContent = option;
+                    optionElement.addEventListener("click", () => selectAnswer(index, option));
+                    optionElement.addEventListener("mouseover", () => highlightOption(optionElement));
+                    optionsContainer.appendChild(optionElement);
+                });
+
+                questionElement.appendChild(optionsContainer);
+                quizContainer.appendChild(questionElement);
+            });
+        }
+
+        function selectAnswer(questionIndex, selectedOption) {
+            questions[questionIndex].selected = selectedOption;
+
+         
+            const options = quizContainer.querySelectorAll('.option');
+            options.forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+        }
+
+        function highlightOption(optionElement) {
+            optionElement.style.backgroundColor = "#ffd700"; 
+            setTimeout(() => {
+                optionElement.style.backgroundColor = ""; 
+            }, 500);
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let questionIndex = 0;
+            questions.forEach((q) => {
+                const selectedOption = q.selected;
+                const options = quizContainer.querySelectorAll('.option');
+                const selectedOptionElement = Array.from(options).find(option => option.textContent === selectedOption);
+
+                if (selectedOption === q.correctAnswer) {
+                    score++;
+                    selectedOptionElement.classList.add('correct');
+                } else {
+                    selectedOptionElement.classList.add('incorrect');
+                 
+                    const correctOptionElement = Array.from(options).find(option => option.textContent === q.correctAnswer);
+                    correctOptionElement.classList.add('correct');
+                }
+
+                questionIndex++;
+            });
+
+            const percentage = (score / questions.length) * 100;
+            resultContainer.innerHTML = `<p>Your score: ${score} out of ${questions.length} (${percentage}%)</p>`;
+
+        
+            playSound();
+
+       
+            animateBox();
+        }
+
+        function playSound() {
+            const audio = new Audio('melody.mp3'); 
+            audio.play();
+        }
+
+        function animateBox() {
+            animationBox.style.transform = "rotate(360deg)";
+            setTimeout(() => {
+                animationBox.style.transform = "rotate(0deg)";
+            }, 500);
+        }
+
+        buildQuiz();
+    </script>
+</body>
+</html>
